@@ -35,9 +35,9 @@ router.get("/:pid", (req, res, next) => {
   console.log("GET Request in places");
 
   if (!place) {
-    return res
-      .status(404)
-      .json({ message: "Could not find a place for the provided ID." });
+      const error = new Error("Could not find place");
+      error.code = 404;
+      return next(error)
   }
 
   res.json({ place: place });
@@ -52,9 +52,9 @@ router.get("/user/:uid", (req, res, next) => {
   console.log("users");
 
   if (!place) {
-    return res
-      .status(404)
-      .json({ message: "Could not find a place for the provided user ID." });
+    const error = new Error('Could not find user');
+    error.code = 404
+    throw error
   }
 
   res.json({ place: place });
