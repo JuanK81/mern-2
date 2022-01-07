@@ -66,7 +66,7 @@ const createPlace = (req, res, next) => {
         creator,
     };
 
-    DUMMY_PLACES.push(createPlace);
+    DUMMY_PLACES.push(createPlace); //ushift(createPlace) to add te new element to the beginning of the list
 
     res.status(201).json({place: createdPlace})
 };
