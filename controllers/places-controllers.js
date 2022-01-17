@@ -23,7 +23,7 @@ let DUMMY_PLACES = [
       lng: 2.634517,
     },
     address: "Close to yes",
-    creator: "u2",
+    creator: "u1",
   },
 ];
 
@@ -44,19 +44,19 @@ const getPlaceById = (req, res, next) => {
 const getPlacesByUserId = (req, res, next) => {
   const userId = req.params.uid;
 
-  const place = DUMMY_PLACES.find((p) => {
+  const places = DUMMY_PLACES.filter((p) => {
     return p.creator === userId;
   });
 
   console.log("users");
 
-  if (!place) {
+  if (!places || places.length === 0) {
     return next(
-      new HttpError("Could not find a place for the provided user id.", 404)
+      new HttpError("Could not find a places for the provided user id.", 404)
     );
   }
 
-  res.json({ place: place });
+  res.json({ places: places });
 };
 
 const createPlace = (req, res, next) => {
