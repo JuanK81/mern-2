@@ -6,7 +6,6 @@ const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
 const HttpError = require('./models/http-error');
 const { urlConfig } = require('./util/mongo-connection');
-// const urlConfig = require('./util/mongo-connection');
 
 const app = express();
 
