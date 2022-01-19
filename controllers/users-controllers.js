@@ -1,23 +1,7 @@
-const nodeid = require('node-id');
 const { validationResult } = require('express-validator');
 
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
-
-const DUMMY_USERS = [
-  {
-    id: 'u1',
-    name: 'Paco',
-    email: 'something@something.something',
-    password: 'password',
-  },
-  {
-    id: 'u2',
-    name: 'Gallo',
-    email: 'pocpoc@something.something',
-    password: 'password',
-  },
-];
 
 
 //GET USERS
