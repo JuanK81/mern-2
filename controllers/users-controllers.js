@@ -55,7 +55,8 @@ const signup = async (req, res, next) => {
   const createdUser = new User({
     name,
     email,
-    image: 'https://images.pexels.com/photos/3175971/pexels-photo-3175971.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260',
+    image: req.file.path,
+    // image: req.file.path.replace("\\", "/"),
     password,
     places: []
   });
