@@ -76,7 +76,7 @@ const createPlace = async (req, res, next) => {
   const { title, description, address, creator } = req.body;
 
   let coordinates;
-  console.log(coordinates);
+  console.log('coordinates', coordinates);
 
   try {
     coordinates = await getCoordForAddress(address);
@@ -94,6 +94,8 @@ const createPlace = async (req, res, next) => {
     creator,
   });
 
+  console.log('clg 97 createdplace', createdPlace);
+
   let user;
 
   try {
@@ -105,7 +107,7 @@ const createPlace = async (req, res, next) => {
     );
     return next(error);
   }
-
+console.log('clg 110 creator',creator);
   if(!user) {
      const error = new HttpError(
        'Could not fin user for provided id. Please try again.',
@@ -114,7 +116,7 @@ const createPlace = async (req, res, next) => {
      return next(error);
   }
 
-  console.log(user);
+  console.log('clg 119 user',user);
 
   try {
     const sess = await mongoose.startSession();
@@ -124,16 +126,60 @@ const createPlace = async (req, res, next) => {
     await user.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
+    console.log('clg 129 err', err);
     const error = new HttpError(
       'Creating new place failed. Please try again.',
       500
-    );
+      );
     return next(error);
   }
 
   res.status(201).json({ place: createdPlace });
   console.log(createdPlace);
 };
+
+// const createPlace = async (req, res, next) => {
+//   const errors = validationResult(req);
+//   if (!errors.isEmpty()) {
+//     return next(
+//       new HttpError('Invalid inputs passed, please check your data.', 422)
+//     );
+//   }
+
+//   const { title, description, address, creator } = req.body;
+
+//   let coordinates;
+//   try {
+//     coordinates = await getCoordForAddress(address);
+//   } catch (error) {
+//     return next(error);
+//   }
+
+//   // const title = req.body.title;
+//   const createdPlace = new Place({
+//     title,
+//     description,
+//     address,
+//     location: coordinates,
+//     image:
+//       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Empire_State_Building_%28aerial_view%29.jpg/400px-Empire_State_Building_%28aerial_view%29.jpg',
+//     creator,
+//   });
+
+//   console.log('max clg 169 createdplace', createdPlace);
+
+//   try {
+//     await createdPlace.save();
+//   } catch (err) {
+//     const error = new HttpError(
+//       'Creating place failed, please try again.',
+//       500
+//     );
+//     return next(error);
+//   }
+
+//   res.status(201).json({ place: createdPlace });
+// };
 
 
 //UPDATE
@@ -226,3 +272,4 @@ exports.getPlacesByUserId = getPlacesByUserId;
 exports.createPlace = createPlace;
 exports.updatePlace = updatePlace;
 exports.deletePlace = deletePlace;
+
