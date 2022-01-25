@@ -1,6 +1,5 @@
 {
     "env": {
-        "DB_USER": "***",
-        "DB_PASSWORD": "****"
+        
     }
 }
