@@ -74,7 +74,7 @@ const createPlace = async (req, res, next) => {
     return next(new HttpError('Invalid inputs passed', 422));
   }
 
-  const { title, description, address, creator } = req.body;
+  const { title, description, address } = req.body;
 
   let coordinates;
   console.log('coordinates', coordinates);
@@ -92,13 +92,13 @@ const createPlace = async (req, res, next) => {
     location: coordinates,
     image: req.file.path,
     // image: req.file.path.replace('\\', '/'),
-    creator,
+    creator: req.userData.userId
   });
 
   let user;
 
   try {
-    user = await User.findById(creator);
+    user = await User.findById(req.userData.userId);
   } catch (err) {
     const error = new HttpError(
       'Creating new place failed. Please try again.',
@@ -106,7 +106,7 @@ const createPlace = async (req, res, next) => {
     );
     return next(error);
   }
-  console.log('clg 110 creator', creator);
+  console.log('clg 110 creator', req.userData.userId);
   if (!user) {
     const error = new HttpError(
       'Could not fin user for provided id. Please try again.',
